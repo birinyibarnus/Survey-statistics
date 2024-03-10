@@ -6,6 +6,7 @@ import org.example.dto.SurveyStatisticsResponse;
 import org.example.entity.Member;
 import org.example.entity.Participation;
 import org.example.entity.Survey;
+import org.example.service.DataService;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,7 +14,7 @@ import java.util.stream.Stream;
 
 
 @RequiredArgsConstructor
-public class DataServiceImpl {
+public class DataServiceImpl implements DataService {
 
     private final DataStore dataStore;
 
@@ -23,6 +24,7 @@ public class DataServiceImpl {
     }
 
     // 2.a
+    @Override
     public Stream<Member> getRespondentsWithCompletedStatus(int surveyId) {
         return getCompletedParticipations()
                 .filter(participation -> participation.getSurveyId() == surveyId)
@@ -33,6 +35,7 @@ public class DataServiceImpl {
     }
 
     // 2.b
+    @Override
     public Stream<Survey> getCompletedSurveysByMemberId(int memberId) {
         return getCompletedParticipations()
                 .filter(participation -> participation.getMemberId() == memberId)
@@ -43,6 +46,7 @@ public class DataServiceImpl {
     }
 
     //2.c
+    @Override
     public Map<Integer, Integer> getCollectedPointsByMember(int memberId) {
         return dataStore.getParticipations().stream()
                 .filter(participation -> participation.getMemberId() == memberId)
@@ -55,6 +59,7 @@ public class DataServiceImpl {
     }
 
     //2.d
+    @Override
     public Stream<Member> getInvitedMembersForSurvey(int surveyId) {
         return dataStore.getParticipations().stream()
                 .filter(participation -> participation.getStatus() <= 2
@@ -65,6 +70,7 @@ public class DataServiceImpl {
     }
 
     //2.e
+    @Override
     public Stream<SurveyStatisticsResponse> getSurveyStatistics() {
         return dataStore.getSurveys().values().stream()
                 .map(survey -> {
