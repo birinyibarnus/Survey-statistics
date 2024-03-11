@@ -45,7 +45,7 @@ public class DataServiceImpl implements DataService {
                 .mapToObj(dataStore.getSurveys()::get);
     }
 
-    //2.c
+    // 2.c
     @Override
     public Map<Integer, Integer> getCollectedPointsByMember(int memberId) {
         return dataStore.getParticipations().stream()
@@ -58,7 +58,7 @@ public class DataServiceImpl implements DataService {
                         Collectors.summingInt(Survey::getCompletionPoints)));
     }
 
-    //2.d
+    // 2.d
     @Override
     public Stream<Member> getInvitedMembersForSurvey(int surveyId) {
         return dataStore.getParticipations().stream()
@@ -69,7 +69,7 @@ public class DataServiceImpl implements DataService {
                 .filter(Member::isActive);
     }
 
-    //2.e
+    // 2.e
     @Override
     public Stream<SurveyStatisticsResponse> getSurveyStatistics() {
         return dataStore.getSurveys().values().stream()
