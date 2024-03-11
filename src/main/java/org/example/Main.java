@@ -13,7 +13,7 @@ public class Main {
         dataService.getSurveyStatistics().forEach(System.out::println);
         System.out.println("\nCompleted Surveys");
         dataService.getCompletedSurveysByMemberId(1).forEach(System.out::println);
-        System.out.println("\nCollected Points by member\nSurvey ID - Collected points");
+        System.out.println("\nCollected Points by member\nSurvey ID - Collected pointsq");
         dataService.getCollectedPointsByMember(1).entrySet().forEach(System.out::println);
         System.out.println("\nInvited members for survey");
         dataService.getInvitedMembersForSurvey(1).forEach(System.out::println);
