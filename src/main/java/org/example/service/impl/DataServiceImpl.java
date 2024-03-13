@@ -8,6 +8,7 @@ import org.example.entity.Participation;
 import org.example.entity.Survey;
 import org.example.service.DataService;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -60,13 +61,12 @@ public class DataServiceImpl implements DataService {
 
     // 2.d
     @Override
-    public Stream<Member> getInvitedMembersForSurvey(int surveyId) {
-        return dataStore.getParticipations().stream()
-                .filter(participation -> participation.getStatus() <= 2
-                        && participation.getSurveyId() == surveyId)
-                .mapToInt(Participation::getMemberId)
-                .mapToObj(dataStore.getMembers()::get)
-                .filter(Member::isActive);
+    public Stream<Member> getInvitableMember(int surveyId) {
+        return dataStore.getMembers().values().stream()
+                .filter(member -> member.isActive()
+                && dataStore.getParticipations().stream()
+                        .filter(participation -> participation.getSurveyId() == surveyId)
+                        .noneMatch(participation -> participation.getMemberId() == member.getMemberId()));
     }
 
     // 2.e

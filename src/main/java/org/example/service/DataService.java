@@ -18,7 +18,7 @@ public interface DataService {
     Map<Integer, Integer> getCollectedPointsByMember(int memberId);
 
     //2.d
-    Stream<Member> getInvitedMembersForSurvey(int surveyId);
+    Stream<Member> getInvitableMember(int surveyId);
 
     //2.e
     Stream<SurveyStatisticsResponse> getSurveyStatistics();

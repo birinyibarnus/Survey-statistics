@@ -86,7 +86,7 @@ public class DataServiceTest {
         members.put(1, member);
         given(dataStoreMock.getMembers()).willReturn(members);
         // when
-        Stream<Member> actual = underTest.getInvitedMembersForSurvey(1);
+        Stream<Member> actual = underTest.getInvitableMember(1);
         // then
         assertTrue(actual.anyMatch(memberItem -> memberItem.getMemberId() == 1));
     }
