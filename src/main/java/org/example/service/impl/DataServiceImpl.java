@@ -11,6 +11,7 @@ import org.example.service.DataService;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
@@ -63,10 +64,15 @@ public class DataServiceImpl implements DataService {
     @Override
     public Stream<Member> getInvitableMember(int surveyId) {
         return dataStore.getMembers().values().stream()
-                .filter(member -> member.isActive()
-                && dataStore.getParticipations().stream()
-                        .filter(participation -> participation.getSurveyId() == surveyId)
-                        .noneMatch(participation -> participation.getMemberId() == member.getMemberId()));
+                .filter(Member::isActive)
+                .filter(member -> {
+                    boolean noneMatch = dataStore.getParticipations().stream()
+                            .noneMatch(participation -> participation.getMemberId() == member.getMemberId());
+                    boolean statusIsLessOrEqualTwo = dataStore.getParticipations().stream()
+                            .filter(p -> p.getStatus() <= 2)
+                            .anyMatch(p -> p.getMemberId() == member.getMemberId());
+                    return noneMatch || statusIsLessOrEqualTwo;
+                });
     }
 
     // 2.e

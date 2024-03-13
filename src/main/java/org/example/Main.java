@@ -17,6 +17,8 @@ public class Main {
         dataService.getCollectedPointsByMember(99).entrySet().forEach(System.out::println);
         System.out.println("\nInvitable members");
         dataService.getInvitableMember(75).forEach(System.out::println);
+        long count = dataService.getInvitableMember(75).count();
+        System.out.println("\nInvitable members: " + count);
         System.out.println("\nRespondents with completed status");
         dataService.getRespondentsWithCompletedStatus(-1).forEach(System.out::println);
     }
